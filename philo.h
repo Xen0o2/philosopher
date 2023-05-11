@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:08:57 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/05/10 18:37:57 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:58:12 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_philo
 	pthread_mutex_t	fork;
     int				philo_id;
     int				number_eat;
-    int				is_dead;
+    int            	is_dead;
 	int				size;
 
     unsigned long	time_to_die;
@@ -49,8 +49,9 @@ typedef struct s_philo
     struct s_philo	*next;
 }	t_philo;
 
-int			    ft_atoi(const char *s);
-void		    ft_usleep(long int time_in_ms);
+long long int   ft_atoi(const char *s);
+int    	    ft_usleep(long int time_in_ms, t_philo *current);
 unsigned long   ms(void);
+int	            is_dead(t_philo *current);
 
 #endif

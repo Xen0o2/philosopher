@@ -6,16 +6,16 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:59:17 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/05/10 18:37:49 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:58:24 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *s)
+long long int	ft_atoi(const char *s)
 {
-	int	result;
-	int	sign;
+	long long int	result;
+	int				sign;
 
 	result = 0;
 	sign = 1;
@@ -41,12 +41,16 @@ unsigned long	ms(void)
 	return ((a.tv_sec * 1000 + a.tv_usec / 1000) - start);
 }
 
-void	ft_usleep(long int time_in_ms)
+int	ft_usleep(long int time_in_ms, t_philo *current)
 {
 	long int	start_time;
 
-	start_time = 0;
 	start_time = ms();
 	while ((ms() - start_time) < time_in_ms)
-		usleep(time_in_ms / 10);
+	{
+		if (is_dead(current))
+			return (0);
+		usleep(10);
+	}
+	return (1);
 }
