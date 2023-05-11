@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:09:03 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/05/10 18:55:15 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:14:14 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,35 @@ t_philo	*init_philo(t_info *info, t_philo *first, t_philo *current)
 	return (init_philo(info, first, new_philo));
 }
 
+int	is_dead(t_philo *current)
+{
+	return (0);
+}
+
 void	*routine(void *args)
 {
 	t_philo	*current;
 
 	current = (t_philo *)args;
-	
-	
+	if (current->philo_id % 2 == 0)
+		ft_usleep(current->time_to_eat);
+	while (1)
+	{
+		pthread_mutex_lock(&current->fork);
+		printf("%lu %d has taken a fork\n", ms(), current->philo_id);
+		if (is_dead(current))
+			return (NULL);
+		pthread_mutex_lock(&current->next->fork);
+		printf("%lu %d has taken a fork\n", ms(), current->philo_id);
+		current->last_eat = ms();
+		printf("%lu %d is eating\n", ms(), current->philo_id);
+		ft_usleep(current->time_to_eat);
+		current->number_eat--;
+		pthread_mutex_unlock(&current->fork);
+		pthread_mutex_unlock(&current->next->fork);
+		if (is_dead(current))
+			return (NULL);
+	}
 	return (NULL);
 }
 
