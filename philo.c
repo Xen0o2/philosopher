@@ -6,7 +6,7 @@
 /*   By: alecoutr <alecoutr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:09:03 by alecoutr          #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:51 by alecoutr         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:23:36 by alecoutr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,26 @@ void	*routine(void *args)
 	return (NULL);
 }
 
+void	bigfree(t_philo *head)
+{
+	int		i;
+	int		nb_philo;
+	t_philo	*next;
+
+	i = 0;
+	nb_philo = head->size;
+	while (i++ < nb_philo)
+	{
+		next = head->next;
+		free(head);
+		head = next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_philo	*current;
+	t_philo	*tmp;
 	t_info	info;
 	int		i;
 
@@ -168,5 +185,6 @@ int	main(int ac, char **av)
 	{
 		pthread_detach(current->thread);
 		current = current->next;
-	}	
+	}
+	bigfree(current);
 }
